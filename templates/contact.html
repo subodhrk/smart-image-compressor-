@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center">
+   <h2 class="text-primary fw-bold mb-4">Contact</h2>
+    <img src="{{ url_for('static', filename='subodh.png') }}" alt="Subodh Kamble"
+         class="rounded-circle mb-3"
+         style="width: 200px; height: 200px; object-fit: cover; border: 3px solid white;">
+    <h4>Subodh R Kamble</h4>
+    <p style="display: inline-block; background: linear-gradient(to right, #6a11cb, #2575fc); color: white; padding: 6px 12px; border-radius: 20px; font-weight: 500;">
+  M.Sc Artificial Intelligence
+</p>
+
+  </div>
+
+  <div class="mt-4" style="max-width: 500px; margin: 0 auto;">
+    <div class="mb-3 d-flex align-items-center">
+      <i class="bi bi-envelope me-2" style="font-size: 1.3rem;"></i>
+      <span><strong>Email:</strong> subodhrk358@gmail.com</span>
+    </div>
+
+    <div class="mb-3 d-flex align-items-center">
+      <i class="bi bi-telephone me-2" style="font-size: 1.3rem;"></i>
+      <span><strong>Phone:</strong> +91 9579627023</span>
+    </div>
+
+    <div class="mb-3 d-flex align-items-center">
+      <i class="bi bi-linkedin me-2" style="font-size: 1.5rem; color: #0a66c2;"></i>
+      <a href="https://www.linkedin.com/in/subodh-kamble-123456789"
+         target="_blank" style="text-decoration: none; color: #0a66c2;">
+         linkedin.com/in/subodh-kamble-648541266
+         
+      </a>
+    </div>
+
+    <div class="mb-3 d-flex align-items-center">
+      <i class="bi bi-github me-2" style="font-size: 1.5rem; color: black;"></i>
+      <a href="https://github.com/your-github-username"
+         target="_blank" style="text-decoration: none; color: black;">
+         github.com/subodhrk
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

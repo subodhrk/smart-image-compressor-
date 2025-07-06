@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: url('https://images.unsplash.com/photo-1587614295999-6cdf8f5a7ea1?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2;
+}
+.intro-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  text-align: center;
+  transition: all 1s ease;
+}
+.intro-screen button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.2rem;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  border: none;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.main-content {
+  padding: 2rem;
+  margin-top: 3rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+</style>
+<div class="intro-screen" id="intro">
+  <h1 class="display-4 fw-bold">Welcome to Smart Image Compressor</h1>
+  <p class="lead">Optimize, edit, and beautify your images in seconds</p>
+  <button onclick="showMainContent()">Get Started</button>
+</div>
+<div class="main-content text-center" id="mainContent">
+  <h1 class="text-primary fw-bold mb-3">🗜️  Image editor </h1>
+  <form method="POST" enctype="multipart/form-data" class="mt-4 text-start">
+    <div class="mb-3">
+      <label class="form-label">Select Image:</label>
+      <input type="file" name="image" accept="image/*" class="form-control" onchange="previewImage(event)" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Compression Quality (1–95):</label>
+      <input type="number" name="quality" value="30" min="1" max="95" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Optional Width:</label>
+      <input type="number" name="width" placeholder="e.g. 600" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Optional Height:</label>
+      <input type="number" name="height" placeholder="e.g. 500" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Convert To Format:</label>
+      <select name="format" class="form-select">
+        <option value="JPEG">JPEG</option>
+        <option value="PNG">PNG</option>
+        <option value="WEBP">WEBP</option>
+        <option value="BMP">BMP</option>
+        <option value="TIFF">TIFF</option>
+      </select>
+    </div>
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="removeBg" name="remove_bg" onchange="toggleBgColor()">
+      <label class="form-check-label" for="removeBg">Remove Background</label>
+    </div>
+    <div class="mb-3 d-none" id="bgColorDiv">
+      <label class="form-label">Background Color After Removal:</label>
+      <input type="color" name="bg_color" class="form-control form-control-color" value="#ffffff">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Compress & Download</button>
+  </form>
+  <img id="preview" src="#" class="img-fluid rounded mt-4 d-none" style="max-height: 300px;" />
+  <p class="mt-3">Compress, resize, convert, and edit images easily with AI-powered background removal and customization tools — built especially for students and aspirants needing clean, small-size photos.</p>
+</div>
+<script>
+function showMainContent() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+}
+function toggleBgColor() {
+  const removeBg = document.getElementById('removeBg');
+  const bgColorDiv = document.getElementById('bgColorDiv');
+  if (removeBg.checked) {
+    bgColorDiv.classList.remove("d-none");
+  } else {
+    bgColorDiv.classList.add("d-none");
+  }
+}
+function previewImage(event) {
+  const preview = document.getElementById('preview');
+  preview.src = URL.createObjectURL(event.target.files[0]);
+  preview.classList.remove("d-none");
+}
+</script>
+{% endblock %}
