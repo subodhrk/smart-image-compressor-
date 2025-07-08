@@ -3,4 +3,4 @@ pillow
 rembg
 rawpy
 pillow-heif
-
+gunicorn
