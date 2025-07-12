@@ -4,6 +4,7 @@ from rembg import remove
 from pillow_heif import register_heif_opener
 import rawpy
 import io
+import os  # ✅ Added missing import
 
 register_heif_opener()
 
@@ -16,7 +17,7 @@ def index():
         quality = int(request.form.get('quality', 30))
         width = request.form.get('width', type=int)
         height = request.form.get('height', type=int)
-        format = request.form.get('format', 'JPEG')
+        format = request.form.get('format', 'JPEG').upper()
         remove_bg = 'remove_bg' in request.form
         bg_color = request.form.get('bg_color', '#FFFFFF')
 
@@ -34,19 +35,24 @@ def index():
         if remove_bg:
             img = remove(img)
             bg = Image.new("RGBA", img.size, bg_color)
-            bg.paste(img, mask=img.split()[3])
+            bg.paste(img, mask=img.split()[3])  # Alpha channel
             img = bg.convert("RGB" if format != "PNG" else "RGBA")
 
         if width and height:
             img = img.resize((width, height))
 
         buffer = io.BytesIO()
-        img.save(buffer, format=format.upper(), quality=quality)
+        img.save(buffer, format=format, quality=quality if format != "PNG" else None)
         buffer.seek(0)
-        return send_file(buffer, as_attachment=True, download_name=f"compressed.{format.lower()}",
-                         mimetype=f"image/{format.lower()}")
-    return render_template('index.html')
 
+        return send_file(
+            buffer,
+            as_attachment=True,
+            download_name=f"compressed.{format.lower()}",
+            mimetype=f"image/{format.lower()}"
+        )
+
+    return render_template('index.html')
 
 @app.route('/about')
 def about():
@@ -64,7 +70,7 @@ def editor():
 def contact():
     return render_template('contact.html')
 
+# ✅ This part was missing 'os' earlier — now corrected and ready for Render
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
+    port = int(os.environ.get('PORT', 5000))  # Render sets PORT
+    app.run(host='0.0.0.0', port=port)
