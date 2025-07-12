@@ -70,7 +70,15 @@ def editor():
 def contact():
     return render_template('contact.html')
 
+<<<<<<< HEAD
 # ✅ This part was missing 'os' earlier — now corrected and ready for Render
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Use Render's assigned port
     app.run(host='0.0.0.0', port=port)
+=======
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))  # Render will set PORT
+    app.run(host='0.0.0.0', port=port)
+
+>>>>>>> 6b60e551684fab46fdba86693fbb2321a95055ba
